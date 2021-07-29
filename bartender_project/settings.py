@@ -70,7 +70,7 @@ DATABASES = {
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'coffee_shop',
+#         'NAME': 'bartender_site',
 #         'USER': env('DB_USER'),
 #         'PASSWORD' : env('DB_PASS'),
 #     }
