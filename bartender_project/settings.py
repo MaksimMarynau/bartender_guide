@@ -27,6 +27,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'account',
+    'cocktails',
+    'contact',
+    'ingredients',
 ]
 
 MIDDLEWARE = [
@@ -75,6 +80,9 @@ DATABASES = {
 #         'PASSWORD' : env('DB_PASS'),
 #     }
 # }
+
+# USER
+AUTH_USER_MODEL = 'account.CustomUser'
 
 
 AUTH_PASSWORD_VALIDATORS = [
