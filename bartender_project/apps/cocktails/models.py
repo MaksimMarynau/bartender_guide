@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from account.models import CustomUser
 from ingredients.models import Ingredient
 
+
 class Style(models.Model):
     title_s = models.CharField(verbose_name=_('Title'),max_length=30,)
 
@@ -24,9 +25,9 @@ class Cocktail(models.Model):
     serve_in = models.CharField(verbose_name=_('Serve in'),max_length=30)
     garnish = models.CharField(verbose_name=_('Garnish'),max_length=30)
     how_to_make = models.TextField(verbose_name=_('How to make'),)
-    cocktail_ingredients = models.ForeignKey(
+    cocktail_ingredients = models.ManyToManyField(
         'CocktailIngredient',
-        on_delete=models.CASCADE)
+    )
     review = models.CharField(verbose_name=_('Review'),max_length=100)
     history = models.TextField(verbose_name=_('History'),)
     nutrition = models.CharField(verbose_name=_('Nutrition'),max_length=50)
@@ -59,4 +60,4 @@ class CocktailIngredient(models.Model):
         verbose_name_plural='Cocktail ingredients'
 
     def __str__(self):
-        return self.ingredients.title_i
+        return f'{self.ingredients.title_i} {self.how_many} ml'

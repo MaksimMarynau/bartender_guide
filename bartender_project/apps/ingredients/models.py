@@ -3,6 +3,7 @@ from django.utils.translation import gettext_lazy as _
 
 from account.models import CustomUser
 
+
 class Category(models.Model):
     title_c = models.CharField(
         verbose_name=_('Title of category'),
@@ -15,6 +16,7 @@ class Category(models.Model):
 
     def __str__(self):
         return self.title_c
+
 
 class Ingredient(models.Model):
     title_i = models.CharField(
