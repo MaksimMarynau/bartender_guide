@@ -4,7 +4,7 @@ from .models import Category, Ingredient
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['title_c',]
+    list_display = ['id','title_c',]
 
 
 class IngredientAdmin(admin.ModelAdmin):
@@ -16,6 +16,7 @@ class IngredientAdmin(admin.ModelAdmin):
         'draft',
     ]
     filter_horizontal = ('category',)
+    prepopulated_fields = {'slug':('title_i',)}
 
 
 admin.site.register(Category, CategoryAdmin)

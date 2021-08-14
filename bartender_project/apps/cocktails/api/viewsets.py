@@ -9,7 +9,6 @@ from .serializers import (
 from cocktails.models import Style, Cocktail, CocktailIngredient
 
 
-
 class StyleViewSet(viewsets.ModelViewSet):
     queryset = Style.objects.all()
     serializer_class = StyleSerializer

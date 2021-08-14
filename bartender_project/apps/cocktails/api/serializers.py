@@ -3,20 +3,20 @@ from rest_framework import serializers
 from cocktails.models import Style, Cocktail, CocktailIngredient
 
 
-class StyleSerializer(serializers.ModelSerializer):
+class StyleSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Style
-        fields = ('title_s',)
+        fields = ('url','title_s','cocktails')
 
 
-class CocktailSerializer(serializers.ModelSerializer):
+class CocktailSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Cocktail
-        fields = ('name','slug','serve_in','garnish','how_to_make','cocktail_ingredients','review','history','nutrition','style','draft','bartender')
+        fields = ('url','name','slug','serve_in','garnish','how_to_make','cocktail_ingredients','review','history','nutrition','style','draft',)
 
-class CocktailIngredientSerializer(serializers.ModelSerializer):
+class CocktailIngredientSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = CocktailIngredient
-        fields = ('how_many','ingredients',)
+        fields = ('url','how_many','ingredients','cocktails_list')

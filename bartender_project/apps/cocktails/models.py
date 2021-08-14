@@ -19,21 +19,17 @@ class Style(models.Model):
 
 class Cocktail(models.Model):
     name = models.CharField(verbose_name=_('Name of cocktail'), max_length=40)
-    slug = models.SlugField(
-        verbose_name=_('Slug'),
-        db_index=False)
+    slug = models.SlugField(verbose_name=_('Slug'),
+                            db_index=False)
     serve_in = models.CharField(verbose_name=_('Serve in'),max_length=30)
     garnish = models.CharField(verbose_name=_('Garnish'),max_length=30)
     how_to_make = models.TextField(verbose_name=_('How to make'),)
     cocktail_ingredients = models.ManyToManyField(
-        'CocktailIngredient',
-    )
+        'CocktailIngredient',related_name='cocktails_list')
     review = models.CharField(verbose_name=_('Review'),max_length=100)
     history = models.TextField(verbose_name=_('History'),)
     nutrition = models.CharField(verbose_name=_('Nutrition'),max_length=50)
-    bartender = models.ForeignKey(
-        CustomUser,
-        on_delete=models.CASCADE,)
+    bartender = models.ForeignKey(CustomUser,on_delete=models.CASCADE,)
     style = models.ManyToManyField('Style', related_name='cocktails')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -50,10 +46,9 @@ class Cocktail(models.Model):
 
 class CocktailIngredient(models.Model):
     how_many = models.PositiveSmallIntegerField(blank=False)
-    ingredients = models.ForeignKey(
-        Ingredient,
-        on_delete=models.RESTRICT,
-        related_name='cocktail_ingredients')
+    ingredients = models.ForeignKey(Ingredient,
+                                    on_delete=models.RESTRICT,
+                                    related_name='cocktail_ingredients')
 
     class Meta:
         verbose_name='Cocktail ingredient'
