@@ -29,7 +29,7 @@ class Cocktail(models.Model):
     review = models.CharField(verbose_name=_('Review'),max_length=100)
     history = models.TextField(verbose_name=_('History'),)
     nutrition = models.CharField(verbose_name=_('Nutrition'),max_length=50)
-    bartender = models.ForeignKey(CustomUser,on_delete=models.CASCADE,)
+    bartender = models.ForeignKey(CustomUser,on_delete=models.CASCADE,related_name='bartender_cocktails')
     style = models.ManyToManyField('Style', related_name='cocktails')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

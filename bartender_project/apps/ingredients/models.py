@@ -46,7 +46,8 @@ class Ingredient(models.Model):
     bartender = models.ForeignKey(
         CustomUser,
         null=True,
-        on_delete=models.SET_NULL,)
+        on_delete=models.SET_NULL,
+        related_name='bartender_ingredients')
 
     def __str__(self):
         return self.title_i

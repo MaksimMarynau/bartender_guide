@@ -5,6 +5,7 @@ Django==3.2.5
 django-environ==0.4.5
 django-filter==2.4.0
 djangorestframework==3.12.4
+factory-boy==3.2.0
 Faker==8.11.0
 httpie==2.4.0
 idna==3.2

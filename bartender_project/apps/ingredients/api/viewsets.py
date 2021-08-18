@@ -22,7 +22,7 @@ class CategoryViewSet(ListModelMixin,
                    GenericViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
 
 class IngredientViewSet(ListModelMixin,
