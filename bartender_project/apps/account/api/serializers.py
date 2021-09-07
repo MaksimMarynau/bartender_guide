@@ -2,8 +2,8 @@ from rest_framework import serializers
 
 from account.models import CustomUser
 
-class CustomUserSerializer(serializers.HyperlinkedModelSerializer):
+class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ('url','pk','username','bartender_cocktails','bartender_ingredients')
+        fields = ('id','username','bartender_cocktails','bartender_ingredients')

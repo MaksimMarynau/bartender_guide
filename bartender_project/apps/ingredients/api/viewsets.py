@@ -22,15 +22,15 @@ class CategoryViewSet(ListModelMixin,
                    GenericViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
 
-class IngredientViewSet(ListModelMixin,
-                     CreateModelMixin,
-                     RetrieveModelMixin,
-                     UpdateModelMixin,
-                     DestroyModelMixin,
-                     GenericViewSet):
+class IngredientViewSet(
+                    ListModelMixin,
+                    CreateModelMixin,
+                    RetrieveModelMixin,
+                    UpdateModelMixin,
+                    GenericViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
     permission_classes = [IsAuthenticated]

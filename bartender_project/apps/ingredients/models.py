@@ -7,7 +7,8 @@ from account.models import CustomUser
 class Category(models.Model):
     title_c = models.CharField(
         verbose_name=_('Title of category'),
-        max_length=20)
+        max_length=20,
+        unique=True,)
 
     class Meta:
         verbose_name = 'Category'

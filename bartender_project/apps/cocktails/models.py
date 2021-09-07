@@ -6,7 +6,7 @@ from ingredients.models import Ingredient
 
 
 class Style(models.Model):
-    title_s = models.CharField(verbose_name=_('Title'),max_length=30,)
+    title_s = models.CharField(verbose_name=_('Title'),max_length=30, unique=True)
 
     class Meta:
         verbose_name='Style'
