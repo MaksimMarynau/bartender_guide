@@ -6,13 +6,15 @@ from .models import Style, Cocktail, CocktailIngredient
 class StyleAdmin(admin.ModelAdmin):
     list_display = ['title_s',]
 
+
 class CocktailAdmin(admin.ModelAdmin):
     list_display = ['name','slug','created','updated','draft',]
     filter_horizontal = ('cocktail_ingredients','style')
     prepopulated_fields = {'slug':('name',)}
 
+
 class CocktailIngredientAdmin(admin.ModelAdmin):
-    list_display = ['how_many','ingredients']
+    list_display = ['how_many','ingredient']
 
 
 admin.site.register(Style, StyleAdmin)

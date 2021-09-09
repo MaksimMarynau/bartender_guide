@@ -44,15 +44,16 @@ class Cocktail(models.Model):
     def __str__(self):
         return self.name
 
+
 class CocktailIngredient(models.Model):
     how_many = models.PositiveSmallIntegerField(blank=False)
-    ingredients = models.ForeignKey(Ingredient,
+    ingredient = models.ForeignKey(Ingredient,
                                     on_delete=models.RESTRICT,
-                                    related_name='cocktail_ingredients')
+                                    related_name='cocktail_ingredient')
 
     class Meta:
         verbose_name='Cocktail ingredient'
         verbose_name_plural='Cocktail ingredients'
 
     def __str__(self):
-        return f'{self.ingredients.title_i} {self.how_many} ml'
+        return f'{self.ingredient.title_i} {self.how_many} ml'

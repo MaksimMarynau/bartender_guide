@@ -6,9 +6,9 @@ from .router import router
 
 
 api_urls = [
-    # path('account/', include('account.urls')),
-    path('cocktails/', include('cocktails.urls')),
-    path('ingredients/', include('ingredients.urls')),
+    # path('account/', include('account.urls'), name='account_api'),
+    path('cocktails/', include('cocktails.urls'), name='cocktails_api'),
+    path('ingredients/', include('ingredients.urls'), name='ingredients_api'),
 ]
 
 
