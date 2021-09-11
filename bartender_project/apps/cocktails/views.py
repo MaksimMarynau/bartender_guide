@@ -11,7 +11,6 @@ from account.permissions import (
     HasMakeCocktailPermission,
 )
 from .api.serializers import (
-    StyleSerializer,
     StyleCreateSerializer,
     StyleDetailSerializer,
     CocktailSerializer,
