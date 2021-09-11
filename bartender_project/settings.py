@@ -13,7 +13,6 @@ sys.path.insert(0, os.path.join(PROJECT_ROOT, 'apps'))
 
 SECRET_KEY = env("SECRET_KEY")
 
-
 DEBUG = True
 
 

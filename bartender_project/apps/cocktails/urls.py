@@ -13,9 +13,9 @@ from .views import (
 
 urlpatterns = [
     path('', cocktail_list_view, name='cocktail_list'),
-    path('add/', cocktail_create_view, name='cocktail_create'),
+    path('add', cocktail_create_view, name='cocktail_create'),
     path('detail/<str:slug>/', cocktail_detail_view, name='cocktail_detail'),
-    path('ingredients/', cocktailingredient_list_view, name='ci_list'),
+    path('ingredients', cocktailingredient_list_view, name='ci_list'),
     path('ingredients/add/', cocktailingredient_create_view, name='ci_create'),
     path('ingredients/detail/<int:pk>/', cocktailingredient_detail_view, name='ci_detail'),
     path('style/add', style_create_view, name='style_create'),
