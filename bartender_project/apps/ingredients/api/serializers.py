@@ -58,7 +58,7 @@ class IngredientSerializer(serializers.ModelSerializer):
 
 class IngredientDetailSerializer(serializers.ModelSerializer):
 
-    category = CategorySerializer(many=True)
+    category = CategorySerializer(many=True,read_only=True)
     cocktail_ingredient = CocktailIngredientSerializer(read_only=True, many=True)
 
     class Meta:

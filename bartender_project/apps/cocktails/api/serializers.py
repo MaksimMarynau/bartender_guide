@@ -100,7 +100,7 @@ class CocktailSerializer(serializers.ModelSerializer):
 class CocktailDetailSerializer(serializers.ModelSerializer):
 
     cocktail_ingredients = CocktailIngredientSerializer(many=True)
-    style = StyleSerializer(many=True)
+    style = StyleSerializer(many=True, read_only=True)
     bartender = serializers.StringRelatedField()
 
     class Meta:
