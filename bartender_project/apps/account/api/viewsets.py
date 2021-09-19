@@ -7,8 +7,8 @@ from rest_framework.mixins import (
     DestroyModelMixin
 )
 
-from account.models import CustomUser
-from account.permissions import IsOwner
+from core.models import CustomUser
+from core.permissions import IsOwner
 from .serializers import (
     CustomUserSerializer,
 )

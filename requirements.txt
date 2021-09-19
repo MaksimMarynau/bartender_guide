@@ -10,6 +10,7 @@ Faker==8.11.0
 httpie==2.4.0
 idna==3.2
 Markdown==3.3.4
+psycopg2-binary==2.9.1
 Pygments==2.9.0
 PySocks==1.7.1
 python-dateutil==2.8.2

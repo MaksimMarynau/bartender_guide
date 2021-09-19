@@ -7,7 +7,7 @@ from rest_framework.mixins import (
     UpdateModelMixin,
     DestroyModelMixin
 )
-from ingredients.models import Category, Ingredient
+from core.models import Category, Ingredient
 from .serializers import (
     CategorySerializer,
     IngredientSerializer,

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ingredients.models import Category, Ingredient
+from core.models import Category, Ingredient
 from cocktails.api.serializers import CocktailIngredientSerializer
 
 

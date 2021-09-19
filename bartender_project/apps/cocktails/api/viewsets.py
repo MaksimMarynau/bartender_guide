@@ -6,7 +6,7 @@ from .serializers import (
     CocktailSerializer,
     CocktailIngredientSerializer,
 )
-from cocktails.models import Style, Cocktail, CocktailIngredient
+from core.models import Style, Cocktail, CocktailIngredient
 
 
 class StyleViewSet(viewsets.ModelViewSet):

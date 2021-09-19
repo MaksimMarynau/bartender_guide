@@ -6,11 +6,11 @@ from rest_framework.generics import (
 
 )
 
-from account.permissions import (
+from core.permissions import (
     IsOwner,
     HasAddIngredientPermission,
 )
-from ingredients.models import (
+from core.models import (
     Category,
     Ingredient
 )

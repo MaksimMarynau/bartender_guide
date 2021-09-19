@@ -6,7 +6,7 @@ from rest_framework.generics import (
 
 )
 
-from account.permissions import (
+from core.permissions import (
     IsOwner,
     HasMakeCocktailPermission,
 )
@@ -20,7 +20,7 @@ from .api.serializers import (
     CocktailIngredientCreateSerializer,
     CocktailIngredientDetailSerializer
 )
-from cocktails.models import Style, Cocktail, CocktailIngredient
+from core.models import Style, Cocktail, CocktailIngredient
 
 
 class StyleCreateView(CreateAPIView):

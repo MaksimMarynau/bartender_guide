@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'core',
     'account',
     'cocktails',
     'contact',
@@ -64,24 +65,26 @@ TEMPLATES = [
 WSGI_APPLICATION = 'bartender_project.wsgi.application'
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'bartender_site',
-#         'USER': env('DB_USER'),
-#         'PASSWORD' : env('DB_PASS'),
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': env('DB_HOST'),
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD' : env('DB_PASS'),
+        'PORT': env('DB_PORT'),
+    }
+}
+
 # USER
-AUTH_USER_MODEL = 'account.CustomUser'
+AUTH_USER_MODEL = 'core.CustomUser'
 
 
 AUTH_PASSWORD_VALIDATORS = [
