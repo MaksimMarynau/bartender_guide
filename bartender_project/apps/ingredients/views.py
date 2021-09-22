@@ -45,7 +45,7 @@ class IngredientCreateView(CreateAPIView):
     permission_classes = [IsAuthenticated, HasAddIngredientPermission]
 
     def perform_create(self, serializer: IngredientCreateSerializer):
-        serializer.save(bartender=self.request.user)
+        serializer.save(user=self.request.user)
 
 ingredient_create_view = IngredientCreateView.as_view()
 
@@ -62,6 +62,6 @@ class IngredientDetailView(RetrieveUpdateDestroyAPIView):
     serializer_class = IngredientDetailSerializer
     permission_classes = [IsAuthenticated, IsOwner]
     queryset = Ingredient.objects.all()
-    lookup_field = 'slug'
+    lookup_field = 'title_i'
 
 ingredient_detail_view = IngredientDetailView.as_view()

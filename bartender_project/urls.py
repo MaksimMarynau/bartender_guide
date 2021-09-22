@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 
-from .router import router
+# from .router import router
 
 
 api_urls = [
@@ -22,9 +22,6 @@ class ListApi(APIView):
             'List-cocktails':'cocktails',
             'Create-cocktails':'cocktails/add',
             'Detail,Update,Delete-cocktails':'cocktails/detail/<str:slug>',
-            'List-cocktail_ingredient':'cocktails/ingredients',
-            'Create-cocktail_ingredient':'cocktails/ingredients/add',
-            'Detail,Update,Delete-cocktail_ingredient':'cocktails/ingredients/detail/<int:pk>',
             'Create-style':'cocktails/style/add',
             'Detail,Update,Delete-style':'cocktails/style/<str:title_s>',
             'List-ingredients':'ingredients',

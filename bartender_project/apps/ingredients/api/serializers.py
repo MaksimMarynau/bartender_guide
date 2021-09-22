@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
 from core.models import Category, Ingredient
-from cocktails.api.serializers import CocktailIngredientSerializer
 
 
 class CategoryCreateSerializer(serializers.ModelSerializer):
@@ -25,8 +24,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class CategoryDetailSerializer(serializers.ModelSerializer):
 
-    ingredients = serializers.SlugRelatedField(
-        slug_field='title_i',
+    ingredients = serializers.StringRelatedField(
         read_only=True,
         many=True
     )
@@ -40,14 +38,14 @@ class IngredientCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Ingredient
-        exclude = ('bartender',)
+        exclude = ('user',)
 
 
 class IngredientSerializer(serializers.ModelSerializer):
 
     url = serializers.HyperlinkedIdentityField(
         view_name='ingredient_detail',
-        lookup_field='slug',
+        lookup_field='title_i',
     )
     category = CategorySerializer(many=True)
 
@@ -59,8 +57,8 @@ class IngredientSerializer(serializers.ModelSerializer):
 class IngredientDetailSerializer(serializers.ModelSerializer):
 
     category = CategorySerializer(many=True,read_only=True)
-    cocktail_ingredient = CocktailIngredientSerializer(read_only=True, many=True)
+    user = serializers.StringRelatedField(read_only=True)
 
     class Meta:
         model = Ingredient
-        fields = ('title_i','slug','alc_product_of','aroma','taste','description','size','draft','category','cocktail_ingredient')
+        fields = ('title_i','amount','category','user')

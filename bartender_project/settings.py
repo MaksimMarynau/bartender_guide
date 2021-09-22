@@ -65,23 +65,23 @@ TEMPLATES = [
 WSGI_APPLICATION = 'bartender_project.wsgi.application'
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'HOST': env('DB_HOST'),
-        'NAME': env('DB_NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD' : env('DB_PASS'),
-        'PORT': env('DB_PORT'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'HOST': env('DB_HOST'),
+#         'NAME': env('DB_NAME'),
+#         'USER': env('DB_USER'),
+#         'PASSWORD' : env('DB_PASS'),
+#         'PORT': env('DB_PORT'),
+#     }
+# }
 
 # USER
 AUTH_USER_MODEL = 'core.CustomUser'

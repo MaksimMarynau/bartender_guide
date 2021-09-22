@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 class IsOwner(permissions.IsAuthenticated):
     def has_object_permission(self, request, view, obj):
         # only owner can get details view data
-        return obj.bartender == request.user
+        return obj.user == request.user
 
 
 class HasMakeCocktailPermission(permissions.IsAuthenticated):

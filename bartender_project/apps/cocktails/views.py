@@ -16,11 +16,8 @@ from .api.serializers import (
     CocktailSerializer,
     CocktailCreateSerializer,
     CocktailDetailSerializer,
-    CocktailIngredientSerializer,
-    CocktailIngredientCreateSerializer,
-    CocktailIngredientDetailSerializer
 )
-from core.models import Style, Cocktail, CocktailIngredient
+from core.models import Style, Cocktail
 
 
 class StyleCreateView(CreateAPIView):
@@ -41,38 +38,12 @@ class StyleDetailView(RetrieveUpdateDestroyAPIView):
 style_detail_view = StyleDetailView.as_view()
 
 
-class CocktailIngredientCreateView(CreateAPIView):
-    serializer_class = CocktailIngredientCreateSerializer
-    permission_classes = [IsAuthenticated, HasMakeCocktailPermission]
-
-
-cocktailingredient_create_view = CocktailIngredientCreateView.as_view()
-
-
-class CocktailIngredientListView(ListAPIView):
-    serializer_class = CocktailIngredientSerializer
-    permission_classes = [AllowAny]
-    queryset = CocktailIngredient.objects.all()
-
-
-cocktailingredient_list_view = CocktailIngredientListView.as_view()
-
-
-class CocktailIngredientDetailView(RetrieveUpdateDestroyAPIView):
-    serializer_class = CocktailIngredientDetailSerializer
-    permission_classes = [IsAuthenticated, HasMakeCocktailPermission]
-    queryset = CocktailIngredient.objects.all()
-
-
-cocktailingredient_detail_view = CocktailIngredientDetailView.as_view()
-
-
 class CocktailCreateView(CreateAPIView):
     serializer_class = CocktailCreateSerializer
     permission_classes = [IsAuthenticated, HasMakeCocktailPermission]
 
     def perform_create(self, serializer: CocktailCreateSerializer):
-        serializer.save(bartender=self.request.user)
+        serializer.save(user=self.request.user)
 
 
 cocktail_create_view = CocktailCreateView.as_view()

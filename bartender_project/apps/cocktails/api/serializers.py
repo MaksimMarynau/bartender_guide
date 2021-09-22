@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.models import Style, Cocktail, CocktailIngredient
+from core.models import Style, Cocktail
 
 
 class StyleCreateSerializer(serializers.ModelSerializer):
@@ -35,52 +35,11 @@ class StyleDetailSerializer(serializers.ModelSerializer):
         fields = ('title_s','cocktails')
 
 
-class CocktailIngredientCreateSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = CocktailIngredient
-        fields = '__all__'
-
-
-
-class CocktailIngredientSerializer(serializers.ModelSerializer):
-
-    url = serializers.HyperlinkedIdentityField(
-        view_name='ci_detail',
-        lookup_field='pk',
-    )
-    ingredient = serializers.SlugRelatedField(
-        slug_field='title_i',
-        read_only=True,
-    )
-
-    class Meta:
-        model = CocktailIngredient
-        fields = ('url','ingredient',)
-
-
-class CocktailIngredientDetailSerializer(serializers.ModelSerializer):
-
-    cocktails_list = serializers.SlugRelatedField(
-        slug_field='name',
-        read_only=True,
-        many=True
-    )
-    ingredient = serializers.SlugRelatedField(
-        slug_field='title_i',
-        read_only=True,
-    )
-
-    class Meta:
-        model = CocktailIngredient
-        fields = ('how_many','ingredient','cocktails_list')
-
-
 class CocktailCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cocktail
-        exclude = ('bartender',)
+        exclude = ('user',)
 
 
 class CocktailSerializer(serializers.ModelSerializer):
@@ -90,19 +49,19 @@ class CocktailSerializer(serializers.ModelSerializer):
         lookup_field='slug',
     )
     style = StyleSerializer(many=True)
-    bartender = serializers.StringRelatedField()
+    user = serializers.StringRelatedField()
 
     class Meta:
         model = Cocktail
-        fields = ('url','name','style','bartender',)
+        fields = ('url','name','style','user',)
 
 
 class CocktailDetailSerializer(serializers.ModelSerializer):
 
-    cocktail_ingredients = CocktailIngredientSerializer(many=True) #required=False, allow_null=True
+    ingredients = serializers.StringRelatedField(many=True, read_only=True)
     style = StyleSerializer(many=True, read_only=True)
-    bartender = serializers.StringRelatedField()
+    user = serializers.StringRelatedField()
 
     class Meta:
         model = Cocktail
-        fields = ('name','slug','serve_in','garnish','how_to_make','cocktail_ingredients','review','history','nutrition','style','bartender','draft',)
+        fields = ('name','slug','serve_in','garnish','ingredients','how_to_make','review','history','nutrition','style','user','draft',)
