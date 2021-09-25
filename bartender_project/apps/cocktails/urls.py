@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import (
+from .api.views import (
     style_create_view,
     style_detail_view,
     cocktail_create_view,

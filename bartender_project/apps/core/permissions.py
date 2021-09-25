@@ -2,10 +2,10 @@ from rest_framework import permissions
 from django.utils.translation import gettext_lazy as _
 
 
-class IsOwner(permissions.IsAuthenticated):
+class IsOwnerOrIsAdminUser(permissions.IsAuthenticated):
     def has_object_permission(self, request, view, obj):
         # only owner can get details view data
-        return obj.user == request.user
+        return bool(obj.user == request.user) or bool(request.user and request.user.is_staff)
 
 
 class HasMakeCocktailPermission(permissions.IsAuthenticated):

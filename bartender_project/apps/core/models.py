@@ -145,7 +145,7 @@ class Ingredient(models.Model):
     )
 
     def __str__(self):
-        return f'{self.title_i}  {self.amount}'
+        return f'{self.title_i} {self.amount}'
 
 #
 # class IngredientDescription(models.Model):
