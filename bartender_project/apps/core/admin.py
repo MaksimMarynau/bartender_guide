@@ -4,7 +4,12 @@ from django.utils.translation import gettext_lazy as _
 
 from .models import CustomUser, AccountType
 from .models import Style, Cocktail, Review
-from .models import Category, Ingredient
+from .models import Category, Ingredient, IngredientItem
+
+
+class IngredientInline(admin.TabularInline):
+    model = Ingredient
+    fields = ["ingredient", "amount"]
 
 
 class AccountTypeAdmin(admin.ModelAdmin):
@@ -38,10 +43,7 @@ class CocktailAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug', 'created', 'updated', 'draft', ]
     filter_horizontal = ('ingredients', 'style')
     prepopulated_fields = {'slug': ('name',)}
-
-
-# class CocktailIngredientAdmin(admin.ModelAdmin):
-#     list_display = ['how_many', 'ingredient']
+    inlines = [IngredientInline]
 
 
 class ReviewsAdmin(admin.ModelAdmin):
@@ -55,19 +57,20 @@ class CategoryAdmin(admin.ModelAdmin):
 
 class IngredientAdmin(admin.ModelAdmin):
     list_display = [
-        'title_i',
+        'ingredient',
         'amount',
-        'user',
     ]
-    filter_horizontal = ('category',)
+    # filter_horizontal = ('category',)
 
+class IngredientItemAdmin(admin.ModelAdmin):
+    list_display = ['title_i',]
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(AccountType, AccountTypeAdmin)
 admin.site.register(Style, StyleAdmin)
 admin.site.register(Cocktail, CocktailAdmin)
-# admin.site.register(CocktailIngredient, CocktailIngredientAdmin)
+admin.site.register(IngredientItem, IngredientItemAdmin)
 admin.site.register(Review, ReviewsAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Ingredient, IngredientAdmin)

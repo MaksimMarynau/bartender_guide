@@ -67,7 +67,10 @@ class Cocktail(models.Model):
     garnish = models.CharField(verbose_name=_('Garnish'),max_length=30)
     how_to_make = models.TextField(verbose_name=_('How to make'),)
     ingredients = models.ManyToManyField(
-        'Ingredient',related_name='cocktail_ingredients')
+        'IngredientItem',
+        through='Ingredient',
+        through_fields=("cocktail", "ingredient"),
+        related_name='cocktail_ingredients')
     review = models.CharField(verbose_name=_('Review'),max_length=100)
     history = models.TextField(verbose_name=_('History'),)
     nutrition = models.CharField(verbose_name=_('Nutrition'),max_length=50)
@@ -131,12 +134,56 @@ class Category(models.Model):
 
 
 class Ingredient(models.Model):
-    title_i = models.CharField(verbose_name=_('Title of ingredient'),
-                               max_length=50,
-                               blank=False,
-                               default='')
-    amount = models.PositiveSmallIntegerField(verbose_name=_('Amount'),)
-    category = models.ManyToManyField(Category, related_name='ingredients')
+    ingredient = models.ForeignKey(
+        'IngredientItem',
+        on_delete=models.CASCADE,
+        related_name='ingredient_item'
+    )
+    cocktail = models.ForeignKey(
+        Cocktail,
+        on_delete=models.CASCADE,
+        related_name='cocktail_item'
+    )
+    amount = models.PositiveSmallIntegerField(
+        verbose_name=_('Amount'),
+        null=True
+    )
+    dimension = models.CharField(verbose_name=_('Dimension'),max_length=10)
+
+
+    def __str__(self):
+        return f'{self.ingredient.title_i} {self.amount} {self.dimension}'
+
+
+class IngredientItem(models.Model):
+    cocktail = models.ManyToManyField(
+        Cocktail,
+        related_name='cocktail_ingredients'
+    )
+    title_i = models.CharField(
+        verbose_name=_('Title of ingredient'),
+        max_length=100,
+        unique=True,)
+    slug = models.SlugField(verbose_name=_('Slug'),
+                            db_index=False)
+    alc_product_of = models.PositiveSmallIntegerField(
+        verbose_name=_('Alc product of'),)
+    aroma = models.CharField(verbose_name=_('Aroma'),
+                             max_length=100,
+                             blank=False,
+                             default='')
+    taste = models.CharField(verbose_name=_('Taste'),
+                             max_length=200,
+                             blank=False,
+                             default='')
+    description = models.TextField(verbose_name=_('Description'),
+                                   blank=False,
+                                   default='')
+    size = models.PositiveSmallIntegerField(verbose_name=_('Size (ml)'),)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    draft = models.BooleanField(verbose_name=_('Draft'), default=False)
+    category = models.ManyToManyField(Category, related_name='categories')
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         null=True,
@@ -145,41 +192,4 @@ class Ingredient(models.Model):
     )
 
     def __str__(self):
-        return f'{self.title_i} {self.amount}'
-
-#
-# class IngredientDescription(models.Model):
-#     ingredient = models.OneToOneField(
-#         Ingredient,
-#         on_delete=models.CASCADE,
-#         related_name='ingredient_description'
-#     )
-#     slug = models.SlugField(verbose_name=_('Slug'),
-#                             db_index=False)
-#     alc_product_of = models.PositiveSmallIntegerField(
-#         verbose_name=_('Alc product of'),)
-#     aroma = models.CharField(verbose_name=_('Aroma'),
-#                              max_length=100,
-#                              blank=False,
-#                              default='')
-#     taste = models.CharField(verbose_name=_('Taste'),
-#                              max_length=200,
-#                              blank=False,
-#                              default='')
-#     description = models.TextField(verbose_name=_('Description'),
-#                                    blank=False,
-#                                    default='')
-#     size = models.PositiveSmallIntegerField(verbose_name=_('Size (ml)'),)
-#     created = models.DateTimeField(auto_now_add=True)
-#     updated = models.DateTimeField(auto_now=True)
-#     draft = models.BooleanField(verbose_name=_('Draft'), default=False)
-#     category = models.ManyToManyField(Category, related_name='categories')
-#     user = models.ForeignKey(
-#         settings.AUTH_USER_MODEL,
-#         null=True,
-#         on_delete=models.SET_NULL,
-#         related_name='user_ingredients'
-#     )
-#
-#     def __str__(self):
-#         return self.title_i
+        return self.title_i
