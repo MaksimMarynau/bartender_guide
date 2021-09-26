@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.models import Category, Ingredient
+from core.models import Category, Ingredient, IngredientItem
 
 
 class CategoryCreateSerializer(serializers.ModelSerializer):
@@ -34,14 +34,21 @@ class CategoryDetailSerializer(serializers.ModelSerializer):
         fields = ('title_c','ingredients')
 
 
+class IngredientItemCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = IngredientItem
+        exclude = ('user',)
+
+
 class IngredientCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Ingredient
-        exclude = ('user',)
+        fields = '__all__'
 
 
-class IngredientSerializer(serializers.ModelSerializer):
+class IngredientItemSerializer(serializers.ModelSerializer):
 
     url = serializers.HyperlinkedIdentityField(
         view_name='ingredient_detail',
@@ -50,15 +57,16 @@ class IngredientSerializer(serializers.ModelSerializer):
     category = CategorySerializer(many=True)
 
     class Meta:
-        model = Ingredient
+        model = IngredientItem
         fields = ('url','title_i','category')
 
 
-class IngredientDetailSerializer(serializers.ModelSerializer):
+class IngredientItemDetailSerializer(serializers.ModelSerializer):
 
     category = CategorySerializer(many=True,read_only=True)
     user = serializers.StringRelatedField(read_only=True)
+    cocktails = serializers.StringRelatedField(many=True,read_only=True)
 
     class Meta:
-        model = Ingredient
-        fields = ('title_i','amount','category','user')
+        model = IngredientItem
+        fields = '__all__'

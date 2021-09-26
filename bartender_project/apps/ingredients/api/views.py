@@ -12,15 +12,16 @@ from core.permissions import (
 )
 from core.models import (
     Category,
-    Ingredient
+    Ingredient,
+    IngredientItem
 )
 from .serializers import (
     CategoryCreateSerializer,
     CategoryDetailSerializer,
-    IngredientSerializer,
+    IngredientItemSerializer,
+    IngredientItemCreateSerializer,
+    IngredientItemDetailSerializer,
     IngredientCreateSerializer,
-    IngredientDetailSerializer,
-
 )
 
 
@@ -40,27 +41,34 @@ class CategoryDetailView(RetrieveUpdateDestroyAPIView):
 category_detail_view = CategoryDetailView.as_view()
 
 
+class IngredientItemCreateView(CreateAPIView):
+    serializer_class = IngredientItemCreateSerializer
+    permission_classes = [IsAuthenticated, HasAddIngredientPermission]
+
+    def perform_create(self, serializer: IngredientItemCreateSerializer):
+        serializer.save(user=self.request.user)
+
+ingredient_create_view = IngredientItemCreateView.as_view()
+
+
 class IngredientCreateView(CreateAPIView):
     serializer_class = IngredientCreateSerializer
     permission_classes = [IsAuthenticated, HasAddIngredientPermission]
 
-    def perform_create(self, serializer: IngredientCreateSerializer):
-        serializer.save(user=self.request.user)
-
-ingredient_create_view = IngredientCreateView.as_view()
+add_ingredient_create_view = IngredientCreateView.as_view()
 
 
-class IngredientListView(ListAPIView):
-    serializer_class = IngredientSerializer
+class IngredientItemListView(ListAPIView):
+    serializer_class = IngredientItemSerializer
     permission_classes = [AllowAny]
-    queryset = Ingredient.objects.all()
+    queryset = IngredientItem.objects.all()
 
-ingredient_list_view = IngredientListView.as_view()
+ingredient_list_view = IngredientItemListView.as_view()
 
 
-class IngredientDetailView(RetrieveUpdateDestroyAPIView):
-    serializer_class = IngredientDetailSerializer
-    queryset = Ingredient.objects.all()
+class IngredientItemDetailView(RetrieveUpdateDestroyAPIView):
+    serializer_class = IngredientItemDetailSerializer
+    queryset = IngredientItem.objects.all()
     lookup_field = 'title_i'
 
     def get_permissions(self):
@@ -68,4 +76,4 @@ class IngredientDetailView(RetrieveUpdateDestroyAPIView):
             return [IsOwnerOrIsAdminUser()]
         return [IsAuthenticated()]
 
-ingredient_detail_view = IngredientDetailView.as_view()
+ingredient_detail_view = IngredientItemDetailView.as_view()

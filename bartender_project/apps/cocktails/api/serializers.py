@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from core.models import Style, Cocktail
-
+from ingredients.api.serializers import IngredientCreateSerializer
 
 class StyleCreateSerializer(serializers.ModelSerializer):
 
@@ -54,14 +54,15 @@ class CocktailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cocktail
         fields = ('url','name','style','user',)
+        ordering = ('name',)
 
 
 class CocktailDetailSerializer(serializers.ModelSerializer):
 
-    ingredients = serializers.StringRelatedField(many=True, read_only=True)
     style = StyleSerializer(many=True, read_only=True)
     user = serializers.StringRelatedField()
+    cocktail_item = serializers.StringRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Cocktail
-        fields = ('name','slug','serve_in','garnish','ingredients','how_to_make','review','history','nutrition','style','user','draft',)
+        fields = ('name','slug','serve_in','garnish','how_to_make','review','history','nutrition','style','user','draft','cocktail_item')

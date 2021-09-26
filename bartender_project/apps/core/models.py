@@ -70,7 +70,7 @@ class Cocktail(models.Model):
         'IngredientItem',
         through='Ingredient',
         through_fields=("cocktail", "ingredient"),
-        related_name='cocktail_ingredients')
+        related_name='cocktails')
     review = models.CharField(verbose_name=_('Review'),max_length=100)
     history = models.TextField(verbose_name=_('History'),)
     nutrition = models.CharField(verbose_name=_('Nutrition'),max_length=50)
@@ -156,10 +156,6 @@ class Ingredient(models.Model):
 
 
 class IngredientItem(models.Model):
-    cocktail = models.ManyToManyField(
-        Cocktail,
-        related_name='cocktail_ingredients'
-    )
     title_i = models.CharField(
         verbose_name=_('Title of ingredient'),
         max_length=100,

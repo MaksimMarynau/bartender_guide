@@ -58,6 +58,7 @@ class CategoryAdmin(admin.ModelAdmin):
 class IngredientAdmin(admin.ModelAdmin):
     list_display = [
         'ingredient',
+        'cocktail',
         'amount',
     ]
     # filter_horizontal = ('category',)
