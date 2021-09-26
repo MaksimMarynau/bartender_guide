@@ -48,7 +48,7 @@ class CocktailAdmin(admin.ModelAdmin):
 
 class ReviewsAdmin(admin.ModelAdmin):
     list_display = ('text', 'parent', 'cocktail', 'id')
-    readonly_fields = ('user',)
+    # readonly_fields = ('user',)
 
 
 class CategoryAdmin(admin.ModelAdmin):

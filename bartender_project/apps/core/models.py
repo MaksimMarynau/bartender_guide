@@ -106,7 +106,7 @@ class Review(models.Model):
     cocktail = models.ForeignKey(Cocktail, on_delete=models.CASCADE, related_name='reviews')
 
     def __str__(self):
-        return f"{self.name} - {self.cocktail}"
+        return f"{self.user.username} - {self.cocktail}"
 
     class Meta:
         verbose_name='Review'

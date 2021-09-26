@@ -1,7 +1,36 @@
 from rest_framework import serializers
 
-from core.models import Style, Cocktail
-from ingredients.api.serializers import IngredientCreateSerializer
+from core.models import Style, Cocktail, Review
+
+
+class FilterReviewListSerializer(serializers.ListSerializer):
+   def to_representation(self, data):
+        data = data.filter(parent=None)
+        return super().to_representation(data)
+
+
+class RecursiveSerializer(serializers.Serializer):
+   def to_representation(self, value):
+        serializer = ReviewSerializer(value, context=self.context)
+        return serializer.data
+
+
+class ReviewCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Review
+        exclude = ('user',)
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    children = RecursiveSerializer(many=True)
+    user = serializers.StringRelatedField()
+
+    class Meta:
+        list_serializer_class = FilterReviewListSerializer
+        model = Review
+        fields = ('id','user','text','children')
+
 
 class StyleCreateSerializer(serializers.ModelSerializer):
 
@@ -62,7 +91,8 @@ class CocktailDetailSerializer(serializers.ModelSerializer):
     style = StyleSerializer(many=True, read_only=True)
     user = serializers.StringRelatedField()
     cocktail_item = serializers.StringRelatedField(many=True, read_only=True)
+    reviews = ReviewSerializer(many=True, read_only=True)
 
     class Meta:
         model = Cocktail
-        fields = ('name','slug','serve_in','garnish','how_to_make','review','history','nutrition','style','user','draft','cocktail_item')
+        fields = ('name','slug','serve_in','garnish','how_to_make','review','history','nutrition','style','user','draft','cocktail_item','reviews')

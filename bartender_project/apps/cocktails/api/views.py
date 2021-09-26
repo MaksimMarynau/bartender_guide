@@ -16,8 +16,9 @@ from .serializers import (
     CocktailSerializer,
     CocktailCreateSerializer,
     CocktailDetailSerializer,
+    ReviewCreateSerializer,
 )
-from core.models import Style, Cocktail
+from core.models import Style, Cocktail, Review
 
 
 class StyleCreateView(CreateAPIView):
@@ -69,3 +70,13 @@ class CocktailDetailView(RetrieveUpdateDestroyAPIView):
         return [IsAuthenticated()]
 
 cocktail_detail_view = CocktailDetailView.as_view()
+
+
+class ReviewCreateView(CreateAPIView):
+    serializer_class = ReviewCreateSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer: ReviewCreateSerializer):
+        serializer.save(user=self.request.user)
+
+review_create_view = ReviewCreateView.as_view()
