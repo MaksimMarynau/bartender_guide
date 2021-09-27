@@ -35,9 +35,9 @@ class ListApi(APIView):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('api/', include(router.urls)),
     path('api/', ListApi.as_view()),
     path('api/', include(api_urls)),
+    path('api/account/', include('account.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
 

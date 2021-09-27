@@ -1,9 +1,36 @@
+from django.contrib.auth import get_user_model, authenticate
+from django.utils.translation import ugettext_lazy as _
+
 from rest_framework import serializers
 
-from core.models import CustomUser
 
-class CustomUserSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = CustomUser
-        fields = ('id','username','bartender_cocktails','bartender_ingredients')
+        model = get_user_model()
+        fields = ('id','username','password','user_cocktails','user_ingredients')
+
+        extra_kwargs = {
+            'password': {
+                'write_only': True,
+                'min_length': 4,
+                'style' : {'input_type': 'password'}
+            },
+            'user_cocktails' : {'read_only': True },
+            'user_ingredients' : {'read_only': True },
+        }
+
+    def create(self, validated_data):
+        """Create a new user with encrypted password and return it"""
+        return get_user_model().objects.create_user(**validated_data)
+
+    def update(self, instance, validated_data):
+        """Update a user, setting the password correctly and return it"""
+        password = validated_data.pop('password', None)
+        user = super().update(instance, validated_data)
+
+        if password:
+            user.set_password(password)
+            user.save()
+
+        return user
