@@ -179,7 +179,7 @@ class IngredientItem(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     draft = models.BooleanField(verbose_name=_('Draft'), default=False)
-    category = models.ManyToManyField(Category, related_name='categories')
+    category = models.ManyToManyField(Category, related_name='ingredient_in_category')
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         null=True,

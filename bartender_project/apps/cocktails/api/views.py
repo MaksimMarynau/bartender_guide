@@ -25,6 +25,8 @@ class StyleCreateView(CreateAPIView):
     serializer_class = StyleCreateSerializer
     permission_classes = [IsAuthenticated, HasMakeCocktailPermission]
 
+    def perform_create(self, serializer: StyleCreateSerializer):
+        serializer.save(user=self.request.user)
 
 style_create_view = StyleCreateView.as_view()
 
@@ -34,6 +36,11 @@ class StyleDetailView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Style.objects.all()
     lookup_field = 'title_s'
+
+    def get_permissions(self):
+        if self.request.method in ['PUT', 'DELETE', 'PATCH']:
+            return [IsOwnerOrIsAdminUser()]
+        return [IsAuthenticated()]
 
 
 style_detail_view = StyleDetailView.as_view()

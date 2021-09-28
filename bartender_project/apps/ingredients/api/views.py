@@ -29,6 +29,9 @@ class CategoryCreateView(CreateAPIView):
     serializer_class = CategoryCreateSerializer
     permission_classes = [IsAuthenticated, HasAddIngredientPermission]
 
+    def perform_create(self, serializer: CategoryCreateSerializer):
+        serializer.save(user=self.request.user)
+
 category_create_view = CategoryCreateView.as_view()
 
 
@@ -37,6 +40,11 @@ class CategoryDetailView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Category.objects.all()
     lookup_field = 'title_c'
+
+    def get_permissions(self):
+        if self.request.method in ['PUT', 'DELETE', 'PATCH']:
+            return [IsOwnerOrIsAdminUser()]
+        return [IsAuthenticated()]
 
 category_detail_view = CategoryDetailView.as_view()
 

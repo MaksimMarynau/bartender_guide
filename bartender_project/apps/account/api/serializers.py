@@ -6,18 +6,22 @@ from rest_framework import serializers
 
 class UserSerializer(serializers.ModelSerializer):
 
+    account_type = serializers.StringRelatedField(read_only=True)
+    user_cocktails = serializers.StringRelatedField(many=True, read_only=True)
+    user_ingredients = serializers.StringRelatedField(many=True, read_only=True)
+
     class Meta:
         model = get_user_model()
-        fields = ('id','username','password','user_cocktails','user_ingredients')
+        fields = ('id','username','first_name','last_name','password','user_cocktails','user_ingredients','account_type')
 
         extra_kwargs = {
             'password': {
                 'write_only': True,
                 'min_length': 4,
-                'style' : {'input_type': 'password'}
+                'max_length': 16,
+                'style' : {'input_type': 'password'},
+                'help_text': 'Create password min 4 and max 16 characters.'
             },
-            'user_cocktails' : {'read_only': True },
-            'user_ingredients' : {'read_only': True },
         }
 
     def create(self, validated_data):

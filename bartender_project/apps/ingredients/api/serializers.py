@@ -24,14 +24,14 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class CategoryDetailSerializer(serializers.ModelSerializer):
 
-    ingredients = serializers.StringRelatedField(
+    ingredient_in_category = serializers.StringRelatedField(
         read_only=True,
         many=True
     )
 
     class Meta:
         model = Category
-        fields = ('title_c','ingredients')
+        fields = ('title_c','ingredient_in_category')
 
 
 class IngredientItemCreateSerializer(serializers.ModelSerializer):

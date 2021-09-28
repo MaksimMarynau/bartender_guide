@@ -10,7 +10,7 @@ from rest_framework.response import Response
 
 
 api_urls = [
-    # path('account/', include('account.urls'), name='account_api'),
+    path('account/', include('account.urls'), name='account_api'),
     path('cocktails/', include('cocktails.urls'), name='cocktails_api'),
     path('ingredients/', include('ingredients.urls'), name='ingredients_api'),
 ]
@@ -25,10 +25,13 @@ class ListApi(APIView):
             'Create-style':'cocktails/style/add',
             'Detail,Update,Delete-style':'cocktails/style/<str:title_s>',
             'List-ingredients':'ingredients',
-            'Create-ingredients':'ingredients/add',
+            'Create-ingredientItem':'ingredients/add',
+            'Create-ingredients':'ingredients/add-ingredient',
             'Detail,Update,Delete-ingredients':'ingredients/detail/<str:slug>',
             'Create-category':'ingredients/category/add',
             'Detail,Update,Delete-category':'ingredients/category/<str:title_c>',
+            'Create-account':'account/create',
+            'Manage-account':'account/me',
         }
         return Response(api_urls)
 
@@ -37,7 +40,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', ListApi.as_view()),
     path('api/', include(api_urls)),
-    path('api/account/', include('account.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
 
