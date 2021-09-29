@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model, authenticate
 from django.utils.translation import ugettext_lazy as _
 
 from rest_framework import serializers
-
+from rest_framework_simplejwt.tokens import RefreshToken
 
 class UserSerializer(serializers.ModelSerializer):
 
@@ -16,10 +16,11 @@ class UserSerializer(serializers.ModelSerializer):
     account_type = serializers.StringRelatedField(read_only=True)
     user_cocktails = serializers.StringRelatedField(many=True, read_only=True)
     user_ingredients = serializers.StringRelatedField(many=True, read_only=True)
+    token = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = get_user_model()
-        fields = ('id','username','email','first_name','last_name','password','password2','user_cocktails','user_ingredients','account_type')
+        fields = ('id','username','email','first_name','last_name','password','password2','user_cocktails','user_ingredients','account_type','token')
 
         extra_kwargs = {
             'password': {
@@ -33,12 +34,12 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         """Create a new user with encrypted password and return it"""
-        password = self.validated_data['password']
-        password2 = self.validated_data['password2']
+        password = validated_data['password']
+        password2 = validated_data['password2']
         if password != password2:
             raise serializers.ValidationError({'password': 'Passwords must match.'})
         validated_data.pop('password2')
-        
+
         return get_user_model().objects.create_user(**validated_data)
 
     def update(self, instance, validated_data):
@@ -51,3 +52,13 @@ class UserSerializer(serializers.ModelSerializer):
             user.save()
 
         return user
+
+    def get_token(self, user):
+        token = RefreshToken.for_user(user)
+        refresh = str(token)
+        access = str(token.access_token)
+        data = {
+            "refresh": refresh,
+            "access": access
+        }
+        return data
