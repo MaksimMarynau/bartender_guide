@@ -1,3 +1,4 @@
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.generics import (
     ListAPIView,
@@ -37,14 +38,18 @@ category_create_view = CategoryCreateView.as_view()
 
 class CategoryDetailView(RetrieveUpdateDestroyAPIView):
     serializer_class = CategoryDetailSerializer
-    permission_classes = [IsAuthenticated]
     queryset = Category.objects.all()
     lookup_field = 'title_c'
 
     def get_permissions(self):
         if self.request.method in ['PUT', 'DELETE', 'PATCH']:
             return [IsOwnerOrIsAdminUser()]
-        return [IsAuthenticated()]
+        return []
+
+    def get_authenticators(self):
+        if self.request.method in ['PUT', 'DELETE', 'PATCH']:
+            return [JWTAuthentication()]
+        return []
 
 category_detail_view = CategoryDetailView.as_view()
 
@@ -82,6 +87,11 @@ class IngredientItemDetailView(RetrieveUpdateDestroyAPIView):
     def get_permissions(self):
         if self.request.method in ['PUT', 'DELETE', 'PATCH']:
             return [IsOwnerOrIsAdminUser()]
-        return [IsAuthenticated()]
+        return []
+
+    def get_authenticators(self):
+        if self.request.method in ['PUT', 'DELETE', 'PATCH']:
+            return [JWTAuthentication()]
+        return []
 
 ingredient_detail_view = IngredientItemDetailView.as_view()

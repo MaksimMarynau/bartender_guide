@@ -1,4 +1,5 @@
-from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.generics import (
     ListAPIView,
     CreateAPIView,
@@ -40,7 +41,12 @@ class StyleDetailView(RetrieveUpdateDestroyAPIView):
     def get_permissions(self):
         if self.request.method in ['PUT', 'DELETE', 'PATCH']:
             return [IsOwnerOrIsAdminUser()]
-        return [IsAuthenticated()]
+        return []
+
+    def get_authenticators(self):
+        if self.request.method in ['PUT', 'DELETE', 'PATCH']:
+            return [JWTAuthentication()]
+        return []
 
 
 style_detail_view = StyleDetailView.as_view()
@@ -74,7 +80,12 @@ class CocktailDetailView(RetrieveUpdateDestroyAPIView):
     def get_permissions(self):
         if self.request.method in ['PUT', 'DELETE', 'PATCH']:
             return [IsOwnerOrIsAdminUser()]
-        return [IsAuthenticated()]
+        return []
+
+    def get_authenticators(self):
+        if self.request.method in ['PUT', 'DELETE', 'PATCH']:
+            return [JWTAuthentication()]
+        return []
 
 cocktail_detail_view = CocktailDetailView.as_view()
 

@@ -43,7 +43,7 @@ class AccountType(models.Model):
 
 
 class Style(models.Model):
-    title_s = models.CharField(verbose_name=_('Title'),max_length=30, unique=True)
+    title_s = models.CharField(verbose_name=_('Title'),max_length=100, unique=True)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         null=True,
@@ -64,16 +64,16 @@ class Cocktail(models.Model):
     slug = models.SlugField(verbose_name=_('Slug'),
                             db_index=False)
     serve_in = models.CharField(verbose_name=_('Serve in'),max_length=30)
-    garnish = models.CharField(verbose_name=_('Garnish'),max_length=30)
+    garnish = models.CharField(verbose_name=_('Garnish'),max_length=255)
     how_to_make = models.TextField(verbose_name=_('How to make'),)
     ingredients = models.ManyToManyField(
         'IngredientItem',
         through='Ingredient',
         through_fields=("cocktail", "ingredient"),
         related_name='cocktails')
-    review = models.CharField(verbose_name=_('Review'),max_length=100)
+    review = models.CharField(verbose_name=_('Review'),max_length=255)
     history = models.TextField(verbose_name=_('History'),)
-    nutrition = models.CharField(verbose_name=_('Nutrition'),max_length=50)
+    nutrition = models.CharField(verbose_name=_('Nutrition'),max_length=255)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         null=True,
@@ -116,7 +116,7 @@ class Review(models.Model):
 class Category(models.Model):
     title_c = models.CharField(
         verbose_name=_('Title of category'),
-        max_length=20,
+        max_length=100,
         unique=True,)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -163,19 +163,24 @@ class IngredientItem(models.Model):
     slug = models.SlugField(verbose_name=_('Slug'),
                             db_index=False)
     alc_product_of = models.PositiveSmallIntegerField(
-        verbose_name=_('Alc product of'),)
+        verbose_name=_('Alc product of'),
+        null=True,
+        blank=True,)
     aroma = models.CharField(verbose_name=_('Aroma'),
-                             max_length=100,
-                             blank=False,
+                             max_length=255,
+                             blank=True,
                              default='')
     taste = models.CharField(verbose_name=_('Taste'),
                              max_length=200,
-                             blank=False,
+                             blank=True,
                              default='')
     description = models.TextField(verbose_name=_('Description'),
-                                   blank=False,
+                                   blank=True,
                                    default='')
-    size = models.PositiveSmallIntegerField(verbose_name=_('Size (ml)'),)
+    size = models.PositiveSmallIntegerField(
+                                verbose_name=_('Size (ml)'),
+                                blank=True,
+                                null=True,)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     draft = models.BooleanField(verbose_name=_('Draft'), default=False)

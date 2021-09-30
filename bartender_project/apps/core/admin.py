@@ -9,7 +9,7 @@ from .models import Category, Ingredient, IngredientItem
 
 class IngredientInline(admin.TabularInline):
     model = Ingredient
-    fields = ["ingredient", "amount"]
+    fields = ["ingredient", "amount", 'dimension']
 
 
 class AccountTypeAdmin(admin.ModelAdmin):
